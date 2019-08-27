@@ -8,7 +8,7 @@ import com.won.services.MemberService;
 public class AdminController {
 
 	public static void main(String[] args) {
-		MemberBean member = new MemberBean();
+		MemberBean member = null;
 		MemberService service = new MemberService();
 		
 		while(true) {
@@ -26,8 +26,11 @@ public class AdminController {
 					JOptionPane.showMessageDialog(null, member.toString());
 					break;
 				case "3" :
+					String searchName=JOptionPane.showInputDialog("이름 입력");
+					JOptionPane.showMessageDialog(null,service.findByName(searchName));
 					break;
 				case "4" :
+					JOptionPane.showMessageDialog(null, service.countAll());
 					break;
 				default :
 					break;

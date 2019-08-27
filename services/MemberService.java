@@ -55,12 +55,50 @@ public class MemberService {
 	 *  비번변경 후 로그인을 실행해서 새로 바뀐 비번이 로그인 성공, 옛날 비번 로그인 실패
 	 */
 	
+	public String changePw(MemberBean member) {
+		String msg = "비밀번호 변경 실패";
+		String Id = member.getId();
+		String[] newPw = member.getPw().split(",");
+		for(int i = 0;i < count;i++) {
+			if(Id.equals(members[i].getId()) && newPw[0].equals(members[i].getPw())) {
+				member.setPw(newPw[1]);
+				msg = "비밀번호 변경 완료";
+				break;
+			}
+		}
+		return msg;
+	}
+	
 	
 	
 	/**
 	 *  4. 회원탈퇴
 	 */
 	
+	public String signOut(MemberBean member) {
+		String msg = "탈퇴실패";
+		int temp = 0;
+		for(int i = 0;i<count;i++) {
+			while(true) {
+				temp++;
+			if(member.getId().equals(members[i].getId()) && 
+					member.getPw().equals(members[i].getPw())) {
+				break;
+			}
+		}
+		for(i = 0;i<count;i++) {
+			if(member.getId().equals(members[i].getId()) && 
+					member.getPw().equals(members[i].getPw())) {
+				members[i]=members[count+1];
+				members[count] = members[temp];
+				count--;
+				count--;
+				msg = "탈퇴완료";
+			}
+		}
+		}
+		return msg;
+	}
 	
 	
 	
@@ -92,6 +130,7 @@ public class MemberService {
 			if(param.getId().equals(members[i].getId())&& param.getPw().equals(members[i].getPw())) {
 				members[i] = param;
 				result = "로그인 성공";
+				break;
 			}
 		}
 		return result;
@@ -132,17 +171,52 @@ public class MemberService {
 		for(int i = 0;i < count;i++) {
 			if(id.equals(members[i].getId())) {
 				member = members[i];
+				break;
 			}
 		}
 		return member;
 	}
-}
+
 	
 	
 	
 	/**
 	*  3. 이름검색(중복 가능한 값)
 	*/
+	
+	public MemberBean[] findByName(String name) {
+		int num = 0;
+		for(int i = 0; i<count;i++) {
+			if(name.equals(members[i].getName())) {
+			num++;
+			}
+		}
+		
+		MemberBean[] members = new MemberBean[num];
+		num=0;
+		for(int i = 0;i<count;i++) {
+			if(name.equals(members[i])) {
+				members[i] = this.members[i];
+				num++;
+				if(num==members.length) {
+					break;
+				}
+				
+			}
+		}
+		return members;
+	}
+	
+	
+	/**
+	 *  4. 전체 회원 수
+	 */
+	
+	public String countAll() {
+		return "총회원 수 : "+"count";
+	}
+
+}
 	
 
 

@@ -44,10 +44,24 @@ public class MemberController {
 				break;
 				
 			case "3" :
-				
+				member = new MemberBean();
+				String Id = JOptionPane.showInputDialog("아이디, 기존 비밀번호, 바꿀 비밀번호를 입력해주세요.");
+				String[] searchName = Id.split(",");
+				member.setId(searchName[0]);
+				member.setPw(searchName[1]+","+searchName[2]);
+				JOptionPane.showMessageDialog(null, service.changePw(member));
 				break;
 				
 			case "4" :
+				member = new MemberBean();
+				String user = JOptionPane.showInputDialog("아이디, 비밀번호를 입력해 주세요.");
+				String[] str = user.split(",");
+				if(str[0].equals(member.getId()) && str[1].equals(member.getPw())) {
+					member.setId(str[0]);
+					member.setPw(str[1]);
+				}
+				JOptionPane.showMessageDialog(null, service.signOut(member));
+				
 				
 				break;
 				
